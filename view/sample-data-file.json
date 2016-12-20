@@ -1,0 +1,53 @@
+[
+  {
+    "id": "1",
+    "labels": ["compile", "make", "phaseC"],
+    "measurement_date": "2016-12-20 1:56PM",
+    "code_date": "Mon Dec 19 16:46:19 2016 -0800",
+    "commit": "074fad6351408d7252b3edc0e422bff4354900e1",
+    "branch": "return-and-tail",
+    "measurement": 450000000,
+    "unit": "microseconds"
+  },
+  {
+    "id": "2",
+    "labels": ["compile", "make", "phaseC"],
+    "measurement_date": "2016-12-20 3:56PM",
+    "code_date": "Mon Dec 19 16:46:19 2016 -0800",
+    "commit": "074fad6351408d7252b3edc0e422bff4354900e1",
+    "branch": "return-and-tail",
+    "measurement": 500000000,
+    "unit": "microseconds"
+  },
+  {
+    "id": "3",
+    "labels": ["compile", "make", "phaseC"],
+    "measurement_date": "2016-12-20 12:56PM",
+    "code_date": "Mon Dec 19 16:46:19 2016 -0800",
+    "commit": "074fad6351408d7252b3edc0e422bff4354900e1",
+    "branch": "return-and-tail",
+    "measurement": 490000000,
+    "unit": "microseconds"
+  },
+  {
+    "id": "4",
+    "labels": ["compile", "make", "phaseC"],
+    "measurement_date": "2016-12-20 4:56PM",
+    "code_date": "Mon Dec 19 16:04:30 2016 -0800",
+    "commit": "119a5e636a09dcc7ad228ee2f7cafdad4a804e06",
+    "branch": "return-and-tail",
+    "measurement": 600000000,
+    "unit": "microseconds"
+  },
+  {
+    "id": "4",
+    "labels": ["compile", "make", "phaseC"],
+    "measurement_date": "2016-12-20 4:56PM",
+    "code_date": "Mon Dec 19 14:27:38 2016 -0800",
+    "commit": "bba4acd0ba488538bb45eb0f718ac6812f4b0e0a",
+    "branch": "return-and-tail",
+    "measurement": 700000000,
+    "unit": "microseconds"
+  }
+]
+
