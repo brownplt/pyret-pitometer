@@ -31,6 +31,7 @@ $ git branch -r --contains 119a5e636a09dcc7ad228ee2f7cafdad4a804e06
     return str
       .split("\n")
       .filter((s) => s !== "")
+      .filter((s) => s.indexOf("HEAD") === -1)
       .map((s) => s.slice(9));
   }
 
