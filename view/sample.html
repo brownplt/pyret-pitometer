@@ -1,6 +1,7 @@
 <html>
 <head>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="URI.js"></script>
 <script src="pitometer.js"></script>
 </head>
 
@@ -11,13 +12,20 @@
 </body>
 <script>
 
+var THEGLOBALDATA = undefined;
 var data = fetch("./sample-data-file2.json");
+var uri = new URI(window.location.href);
+var labels = uri.search(true).label;
+if(typeof labels === "string") { labels = [labels]; }
 data.then(function(dr) {
   if(!dr.ok) {
     console.error("Failed to get data: ", dr);
     return;
   }
-  dr.json().then(render);
+  dr.json().then((d) => {
+    THEGLOBALDATA = d;
+    render(d, labels);
+  });
 });
 data.catch(function(e) {
   console.error("Failed to get data: ", e);

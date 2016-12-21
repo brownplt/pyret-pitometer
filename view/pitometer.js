@@ -1,4 +1,23 @@
-function render(data) {
+function getLabels(data) {
+  const s = new Set();
+  data.forEach((d) =>
+    d.labels.forEach((l) =>
+      s.add(l)));
+  return [... s].sort();
+}
+
+
+function render(data, filterLabels) {
+
+  data = data.filter((d) => {
+    var hasAllLabels = true;
+    filterLabels.forEach((l) => {
+      hasAllLabels = hasAllLabels && (d.labels.indexOf(l) !== -1);
+    });
+    return hasAllLabels;
+  });
+
+  const unit = data[0].unit;
 
   const HEIGHT = 400;
   const WIDTH = 600;
@@ -15,7 +34,7 @@ function render(data) {
   const yScale = d3.scale.linear()
     .domain([
       d3.max(data, plucker("measurement")),
-      d3.min(data, plucker("measurement"))
+      0
     ])
     .range([ 0 + YPADDING, HEIGHT ]);
   const xScale = d3.scale.linear()
@@ -51,6 +70,14 @@ function render(data) {
     .attr("transform", "translate(" + XPADDING + ",0)")
     .call(yAxis);
 
+  svg.append("text")
+      .style("text-anchor", "end")
+      .attr("transform",
+        "translate(0," + (HEIGHT / 2) + ") " +
+        "rotate(-90) "
+        )
+      .attr("dy", "1em")
+      .text(unit);
 
   svg.selectAll("circle")
     .data(data)
