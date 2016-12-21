@@ -1,4 +1,4 @@
-define(["child_process"], function(child_process) {
+define(["child_process", "fs"], function(child_process, fs) {
 
   function checkout(base, commit) {
     var dirName = "build-space/pyret-lang-" + commit
@@ -6,8 +6,20 @@ define(["child_process"], function(child_process) {
     child_process.execSync("git checkout " + commit, { cwd: dirName });
   }
 
+  function cloneIfNeeded(base, dirName) {
+    if(!fs.existsSync(dirName)) {
+      child_process.execSync("git clone " + base + " " + dirName);
+    }
+  }
+
+  function justCheckout(dirName, commit) {
+    child_process.execSync("git checkout " + commit, { cwd: dirName });
+  }
+
   return {
-    checkout: checkout
+    checkout: checkout,
+    justCheckout: justCheckout,
+    cloneIfNeeded: cloneIfNeeded
   };
 });
 

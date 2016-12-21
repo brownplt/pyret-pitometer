@@ -6,7 +6,7 @@
     "code_date": "Mon Dec 19 16:46:19 2016 -0800",
     "commit": "074fad6351408d7252b3edc0e422bff4354900e1",
     "branch": "return-and-tail",
-    "measurement": 450000000,
+    "measurement": 4500,
     "unit": "microseconds"
   },
   {
@@ -16,7 +16,7 @@
     "code_date": "Mon Dec 19 16:46:19 2016 -0800",
     "commit": "074fad6351408d7252b3edc0e422bff4354900e1",
     "branch": "return-and-tail",
-    "measurement": 500000000,
+    "measurement": 5000,
     "unit": "microseconds"
   },
   {
@@ -26,7 +26,7 @@
     "code_date": "Mon Dec 19 16:46:19 2016 -0800",
     "commit": "074fad6351408d7252b3edc0e422bff4354900e1",
     "branch": "return-and-tail",
-    "measurement": 490000000,
+    "measurement": 4900,
     "unit": "microseconds"
   },
   {
@@ -36,7 +36,7 @@
     "code_date": "Mon Dec 19 16:04:30 2016 -0800",
     "commit": "119a5e636a09dcc7ad228ee2f7cafdad4a804e06",
     "branch": "return-and-tail",
-    "measurement": 600000000,
+    "measurement": 6000,
     "unit": "microseconds"
   },
   {
@@ -46,7 +46,55 @@
     "code_date": "Mon Dec 19 14:27:38 2016 -0800",
     "commit": "bba4acd0ba488538bb45eb0f718ac6812f4b0e0a",
     "branch": "return-and-tail",
-    "measurement": 700000000,
+    "measurement": 7000,
+    "unit": "microseconds"
+  },
+    {
+    "id": "c44afb27-0c8b-41f8-b194-5ea885c4251e",
+    "labels": [
+      "js-wall-time",
+      "compiler-build",
+      "phaseA"
+    ],
+    "measurement_date": "Wed Dec 21 2016 10:29:41 GMT-0800 (PST)",
+    "code_date": "Mon Dec 19 2016 16:04:30 GMT-0800 (PST)",
+    "commit": "119a5e636a09dcc7ad228ee2f7cafdad4a804e06",
+    "branches": [
+      "(HEAD detached at 119a5e6)"
+    ],
+    "measurement": 4734.578,
+    "unit": "microseconds"
+  },
+  {
+    "id": "21ce91b5-eaca-497d-ba3d-1483cbdfebe2",
+    "labels": [
+      "js-wall-time",
+      "compiler-build",
+      "phaseB"
+    ],
+    "measurement_date": "Wed Dec 21 2016 10:29:41 GMT-0800 (PST)",
+    "code_date": "Mon Dec 19 2016 16:04:30 GMT-0800 (PST)",
+    "commit": "119a5e636a09dcc7ad228ee2f7cafdad4a804e06",
+    "branches": [
+      "(HEAD detached at 119a5e6)"
+    ],
+    "measurement": 4259.001,
+    "unit": "microseconds"
+  },
+  {
+    "id": "102a0776-e979-4714-ae2a-892628aa4978",
+    "labels": [
+      "js-wall-time",
+      "compiler-build",
+      "phaseC"
+    ],
+    "measurement_date": "Wed Dec 21 2016 10:29:41 GMT-0800 (PST)",
+    "code_date": "Mon Dec 19 2016 16:04:30 GMT-0800 (PST)",
+    "commit": "119a5e636a09dcc7ad228ee2f7cafdad4a804e06",
+    "branches": [
+      "(HEAD detached at 119a5e6)"
+    ],
+    "measurement": 5018.978,
     "unit": "microseconds"
   }
 ]

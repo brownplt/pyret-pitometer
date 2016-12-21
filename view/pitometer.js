@@ -3,7 +3,7 @@ function render(data) {
   const HEIGHT = 400;
   const WIDTH = 600;
   const XPADDING = 100;
-  const YPADDING = 20;
+  const YPADDING = 150;
 
   const codeDates = data.map(function(d) {
     return d.code_date;
@@ -23,6 +23,8 @@ function render(data) {
     .range([ XPADDING, WIDTH ]);
 
   const xAxis = d3.svg.axis()
+    .ticks(uniqueCodeDates.length)
+    .tickFormat((index) => new Date(uniqueCodeDates[index]).toLocaleString())
     .scale(xScale)
     .orient("bottom");
 
@@ -37,7 +39,12 @@ function render(data) {
   svg.append("g")
     .attr("class", "axis")
     .attr("transform", "translate(0," + HEIGHT + ")")
-    .call(xAxis);
+    .call(xAxis)
+    .selectAll("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-60)");
 
   svg.append("g")
     .attr("class", "axis")

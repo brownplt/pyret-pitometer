@@ -22,8 +22,10 @@
   },
   "homepage": "https://github.com/brownplt/pitometer#readme",
   "dependencies": {
+    "benchmark": "^2.1.1",
     "command-line-args": "^3.0.1",
     "mathjs": "^3.5.3",
+    "node-uuid": "^1.4.1",
     "q": "^1.4.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
