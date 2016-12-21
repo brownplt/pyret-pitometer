@@ -3,6 +3,7 @@ require(["./checkout-pyret", "child_process", "fs", "command-line-args", "node-u
 
   const optionDefinitions = [
     { name: 'commits-file', alias: 'c', type: String },
+    { name: 'commit', type: String },
     { name: 'repo', alias: 'r', type: String },
     { name: 'outfile', alias: 'o', type: String }
   ];
@@ -83,7 +84,14 @@ $ git branch --contains 119a5e636a09dcc7ad228ee2f7cafdad4a804e06
 
   }
 
-  const commits = String(fs.readFileSync(options["commits-file"])).split("\n").filter((s) => s !== "");
+  let commits = [];
+
+  if(options["commits-file"]) {
+    commits = String(fs.readFileSync(options["commits-file"])).split("\n").filter((s) => s !== "");
+  }
+  else {
+    commits = [options.commit];
+  }
 
   const allMeasurements = [];
   commits.forEach((c) =>
