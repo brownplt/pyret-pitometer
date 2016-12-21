@@ -17,23 +17,21 @@ require(["./checkout-pyret", "child_process", "fs", "command-line-args", "node-u
   function parseBranches(str) {
     /* Example output:
 
-$ git branch --contains d91dfc7876de3e2ecc589435f973f35be62435d0
-  bare
-  dag-accum
-* return-and-tail
-  return-stack
+$ git branch -r --contains d91dfc7876de3e2ecc589435f973f35be62435d0
+  origin/bare
+  origin/dag-accum
+  origin/return-and-tail
+  origin/return-stack
 
 
-$ git branch --contains 119a5e636a09dcc7ad228ee2f7cafdad4a804e06
-* (HEAD detached at 119a5e6)
-  return-and-tail
+$ git branch -r --contains 119a5e636a09dcc7ad228ee2f7cafdad4a804e06
+  origin/return-and-tail
 
     */
     return str
       .split("\n")
       .filter((s) => s !== "")
-      .filter((s) => s.indexOf("HEAD") === -1)
-      .map((s) => s.slice(2));
+      .map((s) => s.slice(9));
   }
 
   function measureCommit(commit, runner) {
@@ -50,7 +48,7 @@ $ git branch --contains 119a5e636a09dcc7ad228ee2f7cafdad4a804e06
 
     const codeDate = new Date(runString("git show -s --format=%ci " + commit));
     const commitInfo = runString("git show --stat " + commit);
-    const branches = parseBranches(runString("git branch --contains " + commit));
+    const branches = parseBranches(runString("git branch -r --contains " + commit));
     const date = new Date();
 
     const repoData = {
