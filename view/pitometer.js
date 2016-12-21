@@ -25,7 +25,7 @@ function render(data, filterLabels) {
   const YPADDING = 150;
 
   const codeDates = data.map(function(d) {
-    return d.code_date;
+    return d.codeDate;
   });
   const uniqueCodeDates = [... new Set(codeDates)].sort();
 
@@ -34,7 +34,7 @@ function render(data, filterLabels) {
   const yScale = d3.scale.linear()
     .domain([
       d3.max(data, plucker("measurement")),
-      0
+      d3.min(data, plucker("measurement"))
     ])
     .range([ 0 + YPADDING, HEIGHT ]);
   const xScale = d3.scale.linear()
@@ -84,7 +84,7 @@ function render(data, filterLabels) {
     .enter()
     .append("circle")
     .attr("cx", (d) => {
-      var index = uniqueCodeDates.indexOf(d.code_date)
+      var index = uniqueCodeDates.indexOf(d.codeDate)
       console.log("Index was: ", index, " for ", d);
       return xScale(index);
     })

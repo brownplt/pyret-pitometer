@@ -13,10 +13,11 @@
 <script>
 
 var THEGLOBALDATA = undefined;
-var data = fetch("./sample-data-file2.json");
+var data = fetch("./sample-data-file3.json");
 var uri = new URI(window.location.href);
 var labels = uri.search(true).label;
 if(typeof labels === "string") { labels = [labels]; }
+if(typeof labels === "undefined") { labels = []; }
 data.then(function(dr) {
   if(!dr.ok) {
     console.error("Failed to get data: ", dr);
