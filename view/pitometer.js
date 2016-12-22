@@ -10,7 +10,7 @@ const plucker = (s) => (d) => d[s];
 
 function filterOnLabels(data, filterLabels) {
   return data.filter((d) => {
-    var hasAllLabels = true;
+    let hasAllLabels = true;
     filterLabels.forEach((l) => {
       hasAllLabels = hasAllLabels && (d.labels.indexOf(l) !== -1);
     });
@@ -20,7 +20,7 @@ function filterOnLabels(data, filterLabels) {
 
 function filterOnCommits(data, commits) {
   return data.filter((d) => {
-    var hasCommit = false;
+    let hasCommit = false;
     commits.forEach((c) => {
       hasCommit = hasCommit || (d.commit === c);
     });
@@ -28,9 +28,9 @@ function filterOnCommits(data, commits) {
   });
 }
 
-var startR = 0;
-var startG = 100;
-var startB = 200;
+let startR = 0;
+let startG = 100;
+let startB = 200;
 
 function nextColor() {
   startR = (startR + 70) % 255;
@@ -115,7 +115,7 @@ function compare(data, commits, filterLabels) {
     .enter()
     .append("circle")
     .attr("cx", (d) => {
-      var index = uniqueLabels.indexOf(d.labels.sort().join(","))
+      let index = uniqueLabels.indexOf(d.labels.sort().join(","))
       return xScale(index);
     })
     .attr("cy", (d) => yScale(d.measurement))
@@ -195,7 +195,7 @@ function render(data, filterLabels) {
     .enter()
     .append("circle")
     .attr("cx", (d) => {
-      var index = uniqueCodeDates.indexOf(d.codeDate)
+      let index = uniqueCodeDates.indexOf(d.codeDate)
       console.log("Index was: ", index, " for ", d);
       return xScale(index);
     })

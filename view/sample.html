@@ -12,10 +12,10 @@
 </body>
 <script>
 
-var THEGLOBALDATA = undefined;
-var data = fetch("./sample-data-file3.json");
-var uri = new URI(window.location.href);
-var labels = uri.search(true).label;
+let THEGLOBALDATA = undefined;
+let data = fetch("./sample-data-file3.json");
+let uri = new URI(window.location.href);
+let labels = uri.search(true).label;
 if(typeof labels === "string") { labels = [labels]; }
 if(typeof labels === "undefined") { labels = []; }
 data.then(function(dr) {
@@ -25,7 +25,7 @@ data.then(function(dr) {
   }
   dr.json().then((d) => {
     THEGLOBALDATA = d;
-    var commits = uri.search(true).commit;
+    let commits = uri.search(true).commit;
     if(typeof commits !== "undefined") {
       if(typeof commits === "string") { commits = [commits] }
       compare(d, commits, labels);
