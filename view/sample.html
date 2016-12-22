@@ -1,6 +1,6 @@
 <html>
 <head>
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="d3.min.js" charset="utf-8"></script>
 <script src="URI.js"></script>
 <script src="pitometer.js"></script>
 </head>
@@ -25,7 +25,14 @@ data.then(function(dr) {
   }
   dr.json().then((d) => {
     THEGLOBALDATA = d;
-    render(d, labels);
+    var commits = uri.search(true).commit;
+    if(typeof commits !== "undefined") {
+      if(typeof commits === "string") { commits = [commits] }
+      compare(d, commits, labels);
+    }
+    else {
+      render(d, labels);
+    }
   });
 });
 data.catch(function(e) {

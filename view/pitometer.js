@@ -6,16 +6,129 @@ function getLabels(data) {
   return [... s].sort();
 }
 
+const plucker = (s) => (d) => d[s];
 
-function render(data, filterLabels) {
-
-  data = data.filter((d) => {
+function filterOnLabels(data, filterLabels) {
+  return data.filter((d) => {
     var hasAllLabels = true;
     filterLabels.forEach((l) => {
       hasAllLabels = hasAllLabels && (d.labels.indexOf(l) !== -1);
     });
     return hasAllLabels;
   });
+}
+
+function filterOnCommits(data, commits) {
+  return data.filter((d) => {
+    var hasCommit = false;
+    commits.forEach((c) => {
+      hasCommit = hasCommit || (d.commit === c);
+    });
+    return hasCommit;
+  });
+}
+
+var startR = 0;
+var startG = 100;
+var startB = 200;
+
+function nextColor() {
+  startR = (startR + 70) % 255;
+  startG = (startG + 80) % 255;
+  startB = (startB + 90) % 255;
+  return "rgb(" + startR + "," + startG + "," + startB + ")";
+}
+
+function compare(data, commits, filterLabels) {
+
+  const colors = {};
+  commits.forEach(function(c) {
+    colors[c] = nextColor();
+  });
+
+  data = filterOnCommits(data, commits);
+  data = filterOnLabels(data, filterLabels);
+
+  const HEIGHT = 400;
+  const WIDTH = 600;
+  const XPADDING = 100;
+  const YPADDING = 150;
+
+  const unit = data[0].unit;
+  
+  const labels = data.map(function(d) {
+    return d.labels.sort().join(",");
+  });
+  const uniqueLabels = [... new Set(labels)];
+
+  const yScale = d3.scale.linear()
+    .domain([
+      d3.max(data, plucker("measurement")),
+      d3.min(data, plucker("measurement"))
+    ])
+    .range([ 0 + YPADDING, HEIGHT ]);
+
+  const xScale = d3.scale.linear()
+    .domain([0, uniqueLabels.length - 1])
+    .range([ XPADDING, WIDTH ]);
+
+  const xAxis = d3.svg.axis()
+    .ticks(uniqueLabels.length)
+    .tickFormat((index) => uniqueLabels[index])
+    .scale(xScale)
+    .orient("bottom");
+
+  const yAxis = d3.svg.axis()
+    .scale(yScale)
+    .orient("left");
+  
+  const svg = d3.select(".chart")
+    .attr("width", WIDTH + XPADDING)
+    .attr("height", HEIGHT + YPADDING);
+
+  svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(0," + HEIGHT + ")")
+    .call(xAxis)
+    .selectAll("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-60)");
+
+  svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(" + XPADDING + ",0)")
+    .call(yAxis);
+
+  svg.append("text")
+      .style("text-anchor", "end")
+      .attr("transform",
+        "translate(0," + (HEIGHT / 2) + ") " +
+        "rotate(-90) "
+        )
+      .attr("dy", "1em")
+      .text(unit);
+
+  svg.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("cx", (d) => {
+      var index = uniqueLabels.indexOf(d.labels.sort().join(","))
+      return xScale(index);
+    })
+    .attr("cy", (d) => yScale(d.measurement))
+    .attr("r", 5)
+    .attr("fill", (d) => colors[d.commit]);
+
+  console.log(data);
+}
+
+
+function render(data, filterLabels) {
+
+  data = filterOnLabels(data, filterLabels);
 
   const unit = data[0].unit;
 
@@ -28,8 +141,6 @@ function render(data, filterLabels) {
     return d.codeDate;
   });
   const uniqueCodeDates = [... new Set(codeDates)].sort();
-
-  const plucker = (s) => (d) => d[s];
 
   const yScale = d3.scale.linear()
     .domain([
