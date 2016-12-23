@@ -15,6 +15,7 @@ define(["child_process"], function(childProcess) {
 
     const workDir = options.workDir;
     
+    childProcess.execSync("npm install", {cwd: workDir});
     const [, timeA] = time(() =>
       childProcess.execSync("make phaseA", {cwd: workDir}));
     const [, timeB] = time(() =>
