@@ -16,11 +16,11 @@ define(["child_process"], function(childProcess) {
     const workDir = options.workDir;
     
     const [, timeA] = time(() =>
-      childProcess.execSync("echo 'make phaseA'", {cwd: workDir}));
+      childProcess.execSync("make phaseA", {cwd: workDir}));
     const [, timeB] = time(() =>
-      childProcess.execSync("echo 'make phaseB'", {cwd: workDir}));
+      childProcess.execSync("make phaseB", {cwd: workDir}));
     const [, timeC] = time(() =>
-      childProcess.execSync("echo 'make phaseC'", {cwd: workDir}));
+      childProcess.execSync("make phaseC", {cwd: workDir}));
 
     return makeMeasurements([
       {
