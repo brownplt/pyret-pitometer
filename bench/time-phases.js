@@ -21,11 +21,11 @@ define(["child_process"], function(childProcess) {
     
     childProcess.execSync("npm install", {cwd: workDir});
     const [aSuccess, , timeA] = time(() =>
-      childProcess.execSync("echo 'make phaseA'", {cwd: workDir}));
+      childProcess.execSync("make phaseA", {cwd: workDir}));
     const [bSuccess, , timeB] = time(() =>
-      childProcess.execSync("cat non-existst.txt", {cwd: workDir}));
+      childProcess.execSync("make phaseB", {cwd: workDir}));
     const [cSuccess, timeC] = time(() =>
-      childProcess.execSync("echo 'make phaseC'", {cwd: workDir}));
+      childProcess.execSync("make phaseC", {cwd: workDir}));
 
     return makeMeasurements([
       aSuccess && {
