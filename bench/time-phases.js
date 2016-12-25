@@ -1,6 +1,7 @@
 define(["child_process"], function(childProcess) {
 
-  function time(f) {
+  function maybeTime(shouldRun, f) {
+    if(!shouldRun) { return [false, "skipped", 0]; }
     var start = process.hrtime();
     try {
       var ans = f();
@@ -19,12 +20,13 @@ define(["child_process"], function(childProcess) {
 
     const workDir = options.workDir;
     
-    childProcess.execSync("npm install", {cwd: workDir});
-    const [aSuccess, , timeA] = time(() =>
+    const [installSuccess, , timeInstall] = maybeTime(true, () =>
+      childProcess.execSync("npm install", {cwd: workDir}));
+    const [aSuccess, , timeA] = maybeTime(installSuccess, () =>
       childProcess.execSync("make phaseA", {cwd: workDir}));
-    const [bSuccess, , timeB] = time(() =>
+    const [bSuccess, , timeB] = maybeTime(aSuccess, () =>
       childProcess.execSync("make phaseB", {cwd: workDir}));
-    const [cSuccess, timeC] = time(() =>
+    const [cSuccess, timeC] = maybeTime(bSuccess, () =>
       childProcess.execSync("make phaseC", {cwd: workDir}));
 
     return makeMeasurements([

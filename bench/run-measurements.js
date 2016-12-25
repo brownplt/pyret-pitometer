@@ -43,7 +43,7 @@ $ git branch -r --contains 119a5e636a09dcc7ad228ee2f7cafdad4a804e06
 
     childProcess.execSync("make clean", {cwd: workDir});
 
-    console.log("Checked out and made clean");
+    console.log("Checked out " + commit + " and made clean");
 
     const runString = (cmd) => String(childProcess.execSync(cmd, { cwd: workDir}));
 
