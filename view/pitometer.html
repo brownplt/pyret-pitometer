@@ -1,0 +1,43 @@
+<html>
+<head>
+<script src="d3.min.js" charset="utf-8"></script>
+<script src="URI.js"></script>
+<script src="pitometer.js"></script>
+</head>
+
+<body>
+
+<svg class="chart"></svg>
+
+</body>
+<script>
+
+let THEGLOBALDATA = undefined;
+let data = fetch("http://mainmast.cs.brown.edu/pitometer/logs/all-jenkins.json");
+let uri = new URI(window.location.href);
+let labels = uri.search(true).label;
+if(typeof labels === "string") { labels = [labels]; }
+if(typeof labels === "undefined") { labels = []; }
+data.then(function(dr) {
+  if(!dr.ok) {
+    console.error("Failed to get data: ", dr);
+    return;
+  }
+  dr.json().then((d) => {
+    THEGLOBALDATA = d;
+    let commits = uri.search(true).commit;
+    if(typeof commits !== "undefined") {
+      if(typeof commits === "string") { commits = [commits] }
+      compare(d, commits, labels);
+    }
+    else {
+      render(d, labels);
+    }
+  });
+});
+data.catch(function(e) {
+  console.error("Failed to get data: ", e);
+});
+
+</script>
+</html>
