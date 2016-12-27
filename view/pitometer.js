@@ -71,8 +71,8 @@ function compare(data, commits, filterLabels, skipIds) {
 
   const HEIGHT = 400;
   const WIDTH = 600;
-  const XPADDING = 100;
-  const YPADDING = 150;
+  const XPADDING = 150;
+  const YPADDING = 200;
 
   const unit = data[0].unit;
   
