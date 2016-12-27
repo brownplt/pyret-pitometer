@@ -132,6 +132,8 @@ function compare(data, commits, filterLabels, skipIds) {
 
   const tip = d3.tip().attr('class', 'd3-tip').html(tooltipInfo);
 
+  svg.call(tip);
+
   svg.selectAll("circle")
     .data(data)
     .enter()
