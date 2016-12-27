@@ -1,8 +1,23 @@
 <html>
 <head>
 <script src="d3.min.js" charset="utf-8"></script>
+<script src="d3.tip.js" charset="utf-8"></script>
 <script src="URI.js"></script>
 <script src="pitometer.js"></script>
+<style>
+.d3-tip {
+  white-space: pre;
+  background-color: #eee;
+  padding: 0.5em;
+  width: 30em;
+  height: 10em;
+  overflow: scroll;
+}
+.chart {
+  margin-left: 10em;
+  margin-top: 10em;
+}
+</style>
 </head>
 
 <body>
@@ -13,9 +28,12 @@
 <script>
 
 let THEGLOBALDATA = undefined;
-let data = fetch("./sample-data-file3.json");
+let data = fetch("http://mainmast.cs.brown.edu/pitometer/logs/all-jenkins.json");
 let uri = new URI(window.location.href);
 let labels = uri.search(true).label;
+let skipIds = uri.search(true).skipId;
+if(typeof skipIds === "string") { skipIds = [skipIds]; }
+if(typeof skipIds === "undefined") { skipIds = []; }
 if(typeof labels === "string") { labels = [labels]; }
 if(typeof labels === "undefined") { labels = []; }
 data.then(function(dr) {
@@ -28,10 +46,10 @@ data.then(function(dr) {
     let commits = uri.search(true).commit;
     if(typeof commits !== "undefined") {
       if(typeof commits === "string") { commits = [commits] }
-      compare(d, commits, labels);
+      compare(d, commits, labels, skipIds);
     }
     else {
-      render(d, labels);
+      render(d, labels, skipIds);
     }
   });
 });

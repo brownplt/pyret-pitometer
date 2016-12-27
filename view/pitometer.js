@@ -8,6 +8,13 @@ function getLabels(data) {
 
 const plucker = (s) => (d) => d[s];
 
+function tooltipInfo(d) {
+  return "Measurement Id: " + d.uuid + "\n"
+    + "Measurement: " + d.measurement + "\n"
+    + "Labels: " + d.labels.join(",") + "\n"
+    + d.commitInfo;
+}
+
 function filterOnLabels(data, filterLabels) {
   return data.filter((d) => {
     let hasAllLabels = true;
@@ -17,6 +24,18 @@ function filterOnLabels(data, filterLabels) {
     return hasAllLabels;
   });
 }
+
+function filterOnIds(data, skipIds) {
+  return data.filter((d) => {
+    let hasId = false;
+    skipIds.forEach((id) => {
+      hasId = hasId || (d.uuid.indexOf(id) !== -1);
+    });
+    if(hasId) { debugger; }
+    return !hasId;
+  });
+}
+
 
 function filterOnCommits(data, commits) {
   return data.filter((d) => {
@@ -39,7 +58,7 @@ function nextColor() {
   return "rgb(" + startR + "," + startG + "," + startB + ")";
 }
 
-function compare(data, commits, filterLabels) {
+function compare(data, commits, filterLabels, skipIds) {
 
   const colors = {};
   commits.forEach(function(c) {
@@ -48,6 +67,7 @@ function compare(data, commits, filterLabels) {
 
   data = filterOnCommits(data, commits);
   data = filterOnLabels(data, filterLabels);
+  data = filterOnIds(data, skipIds);
 
   const HEIGHT = 400;
   const WIDTH = 600;
@@ -120,15 +140,20 @@ function compare(data, commits, filterLabels) {
     })
     .attr("cy", (d) => yScale(d.measurement))
     .attr("r", 5)
-    .attr("fill", (d) => colors[d.commit]);
+    .attr("fill", (d) => colors[d.commit])
+    .on('click', (d) => {
+      showing ? tip.hide(d) : tip.show(d);
+      showing = !showing;
+    });
 
   console.log(data);
 }
 
 
-function render(data, filterLabels) {
+function render(data, filterLabels, skipIds) {
 
   data = filterOnLabels(data, filterLabels);
+  data = filterOnIds(data, skipIds);
 
   const unit = data[0].unit;
 
@@ -190,6 +215,12 @@ function render(data, filterLabels) {
       .attr("dy", "1em")
       .text(unit);
 
+  const tip = d3.tip().attr('class', 'd3-tip').html(tooltipInfo);
+
+  svg.call(tip);
+
+  let showing = false;
+
   svg.selectAll("circle")
     .data(data)
     .enter()
@@ -201,7 +232,11 @@ function render(data, filterLabels) {
     })
     .attr("cy", (d) => yScale(d.measurement))
     .attr("r", 5)
-    .attr("fill", "#90a090");
+    .attr("fill", "#90a090")
+    .on('click', (d) => {
+      showing ? tip.hide(d) : tip.show(d);
+      showing = !showing;
+    });
 
   console.log(data);
 }
