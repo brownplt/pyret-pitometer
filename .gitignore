@@ -1,3 +1,7 @@
 node_modules
 *.csv
 *.jarr
+bench/build
+bench/build-space
+build-space
+build
