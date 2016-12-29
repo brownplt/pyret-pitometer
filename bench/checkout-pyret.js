@@ -10,10 +10,14 @@ define(["child_process", "fs"], function(child_process, fs) {
     if(!fs.existsSync(dirName)) {
       child_process.execSync("git clone " + base + " " + dirName);
     }
+    else {
+      child_process.execSync("git fetch --all", { cwd: dirName });
+    }
   }
 
   function justCheckout(dirName, commit) {
     child_process.execSync("git checkout " + commit, { cwd: dirName });
+    child_process.execSync("npm install ", {cwd: dirName});
   }
 
   return {

@@ -11,7 +11,8 @@ require(["./checkout-pyret", "child_process", "fs", "command-line-args", "node-u
   const options = commandLineArgs(optionDefinitions)
 
   var base = options.repo;
-  var workDir = "build-space/pyret-lang-time-phases";
+  var workDir = "build-space/pyret-lang";
+  var buildDir = "build-space";
   var mkdir = "mkdir -p build-space";
 
   function parseBranches(str) {
@@ -35,13 +36,21 @@ $ git branch -r --contains 119a5e636a09dcc7ad228ee2f7cafdad4a804e06
       .map((s) => s.slice(9));
   }
 
-  function measureCommit(commit, runner) {
+  function measureCommit(commit, runnerName, runner) {
     childProcess.execSync(mkdir);
 
     checkoutPyret.cloneIfNeeded(base, workDir);
+
+    const commitBeforeCheckout = String(childProcess.execSync("git rev-parse HEAD"));
+
     checkoutPyret.justCheckout(workDir, commit);
 
-    childProcess.execSync("make clean", {cwd: workDir});
+    const commitAfterCheckout = String(childProcess.execSync("git rev-parse HEAD"));
+
+    if(commitBeforeCheckout !== commitAfterCheckout) {
+      console.log("Before this script ran, the repo was checked out to ", commitBeforeCheckout, " and is now on ", commitAfterCheckout, " so make clean is being run");
+      childProcess.execSync("make clean", {cwd: workDir});
+    }
 
     console.log("Checked out " + commit + " and made clean");
 
@@ -51,6 +60,7 @@ $ git branch -r --contains 119a5e636a09dcc7ad228ee2f7cafdad4a804e06
     const commitInfo = runString("git show --stat " + commit);
     const branches = parseBranches(runString("git branch -r --contains " + commit));
     const date = new Date();
+    const config = JSON.parse(String(fs.readFileSync("config.json")));
 
     const repoData = {
       codeDate: codeDate,
@@ -78,7 +88,9 @@ $ git branch -r --contains 119a5e636a09dcc7ad228ee2f7cafdad4a804e06
     
     return runner(makeMeasurements, {
       repoData: repoData,
-      workDir: workDir
+      workDir: workDir,
+      buildDir: buildDir,
+      config: config['measurements'][runnerName]
     });
 
   }
@@ -95,7 +107,7 @@ $ git branch -r --contains 119a5e636a09dcc7ad228ee2f7cafdad4a804e06
   const allMeasurements = [];
   commits.forEach((c) =>
     Object.keys(measurements).forEach((k) =>    
-      allMeasurements.push.apply(allMeasurements, measureCommit(c, measurements[k]))
+      allMeasurements.push.apply(allMeasurements, measureCommit(c, k, measurements[k]))
     )
   );
 

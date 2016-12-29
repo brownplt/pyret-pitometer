@@ -1,0 +1,18 @@
+{
+  "baseUrl": "./build-space/pyret-lang-time-phases/build/phaseB",
+  "optimize": "none",
+  "paths": {
+      "jglr": "../../lib/jglr",
+      "pyret-base": "./",
+      "crypto": "empty:",
+      "fs": "empty:",
+      "http": "empty:",
+      "lockfile": "empty:",
+      "path": "empty:",
+      "q": "empty:",
+      "requirejs": "empty:",
+      "s-expression": "empty:",
+      "seedrandom": "empty:",
+      "websocket": "empty:"
+    }
+}

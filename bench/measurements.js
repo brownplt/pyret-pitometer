@@ -1,11 +1,10 @@
-define(["./time-phases", "./count-lines"], function(tp, cl) {
-
-  
-  console.log("Measurers:", tp, cl);
+define(["./bench-programs", "./time-phases", "./count-lines"], function(bp, tp, cl) {
 
   return {
+    "bench-programs": bp.run,
     "time-phases": tp.run,
     "count-lines": cl.run
   };
 
 });
+
