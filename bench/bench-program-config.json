@@ -1,5 +1,5 @@
 {
-  "baseUrl": "./build-space/pyret-lang-time-phases/build/phaseB",
+  "baseUrl": "./build/pyret-lang/build/phaseB",
   "optimize": "none",
   "paths": {
       "jglr": "../../lib/jglr",
