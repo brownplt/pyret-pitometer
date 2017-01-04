@@ -114,6 +114,3 @@ $ git branch -r --contains 119a5e636a09dcc7ad228ee2f7cafdad4a804e06
   fs.writeFileSync(options.outfile, JSON.stringify(allMeasurements, null, "  "));
 
 })
-    
-
-

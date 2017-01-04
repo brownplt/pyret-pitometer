@@ -3,7 +3,8 @@ define(["child_process", "time-helpers", "fs", "path"], function(childProcess, t
 
     const { hrtimeToMicroseconds, maybeTime } = timeHelpers;
     const workDir = options.workDir;
-    console.log(options);
+    // For include, empty list includes all, populated list checks for _some_
+    // label matching the given string (so union, no intersection)
     const config = options.config || { include: [], programsPath: "programs/" };
     const programsPath = config.programsPath || "programs/";
 
@@ -34,7 +35,7 @@ define(["child_process", "time-helpers", "fs", "path"], function(childProcess, t
     let paths = fs.readdirSync(programsPath);
     console.log("Running for these programs: ", paths);
     paths = paths.filter((p) => p.slice(-4) === ".arr");
-    paths = paths.filter((p) => config.include.some((i) => (p.indexOf(i) !== -1)));
+    paths = paths.filter((p) => include.length === 0 || config.include.some((i) => (p.indexOf(i) !== -1)));
     console.log("Running for these programs after filters: ", paths);
     const results = [];
     paths.map((p) => {

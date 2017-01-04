@@ -1,7 +1,7 @@
 {
   "measurements": {
     "bench-programs": {
-      "include": ["string-dict"]
+      "include": []
     }
   }
 }
