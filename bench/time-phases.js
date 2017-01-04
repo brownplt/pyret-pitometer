@@ -6,6 +6,8 @@ define(["child_process", "time-helpers"], function(childProcess, timeHelpers) {
     const workDir = options.workDir;
 
     const [installSuccess, , timeInstall] = maybeTime(true, () =>
+      childProcess.execSync("make clean", {cwd: workDir}));
+    const [installSuccess, , timeInstall] = maybeTime(true, () =>
       childProcess.execSync("npm install", {cwd: workDir}));
     const [aSuccess, , timeA] = maybeTime(installSuccess, () =>
       childProcess.execSync("make phaseA", {cwd: workDir}));
