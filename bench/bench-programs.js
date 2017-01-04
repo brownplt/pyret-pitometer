@@ -7,7 +7,7 @@ define(["child_process", "time-helpers", "fs", "path"], function(childProcess, t
     // label matching the given string (so union, no intersection)
     const config = options.config || { include: [], programsPath: "programs/" };
     const programsPath = config.programsPath || "programs/";
-
+    const include = config.include || [];
 
     function echoRun(cmd, opts) {
       console.log(cmd);
@@ -35,7 +35,7 @@ define(["child_process", "time-helpers", "fs", "path"], function(childProcess, t
     let paths = fs.readdirSync(programsPath);
     console.log("Running for these programs: ", paths);
     paths = paths.filter((p) => p.slice(-4) === ".arr");
-    paths = paths.filter((p) => include.length === 0 || config.include.some((i) => (p.indexOf(i) !== -1)));
+    paths = paths.filter((p) => include.length === 0 || include.some((i) => (p.indexOf(i) !== -1)));
     console.log("Running for these programs after filters: ", paths);
     const results = [];
     paths.map((p) => {
