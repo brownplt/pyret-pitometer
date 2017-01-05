@@ -19,7 +19,7 @@ function filterOnLabels(data, filterLabels) {
   return data.filter((d) => {
     let hasAllLabels = true;
     filterLabels.forEach((l) => {
-      hasAllLabels = hasAllLabels && (d.labels.indexOf(l) !== -1);
+      hasAllLabels = hasAllLabels && (d.labels.some((dl) => dl.indexOf(l) !== -1));
     });
     return hasAllLabels;
   });
