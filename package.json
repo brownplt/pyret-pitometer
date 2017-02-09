@@ -26,6 +26,7 @@
     "command-line-args": "^3.0.1",
     "mathjs": "^3.5.3",
     "node-uuid": "^1.4.1",
+    "pyret-ar-print": "git://github.com/belph/pyret-ar-print.git#master",
     "q": "^1.4.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
