@@ -12,6 +12,7 @@
       "requirejs": "empty:",
       "seedrandom": "empty:",
       "command-line-args": "empty:",
-      "mathjs": "empty:"
+      "mathjs": "empty:",
+      "pyret-ar-print": "node_modules/pyret-ar-print/main"
     }
 }

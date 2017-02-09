@@ -15,6 +15,8 @@ require(["./checkout-pyret", "child_process", "fs", "command-line-args", "node-u
   var buildDir = "build-space";
   var mkdir = "mkdir -p build-space";
 
+  options.commit = options.commit || 'HEAD';
+
   function parseBranches(str) {
     /* Example output:
 
