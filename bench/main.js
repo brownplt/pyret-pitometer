@@ -37,9 +37,10 @@ require(["./checkout-pyret", "child_process", "fs", "command-line-args"], functi
     --builtin-js-dir bench/ \
     --builtin-js-dir pyret/src/js/trove/ \
     --builtin-arr-dir pyret/src/arr/trove/ \
-    --require-config bench/bench-config.json \
     --build-runnable bench/bench-main.arr \
+    --require-config bench/bench-config.json \
     --standalone-file bench/bench-standalone.js \
+    --deps-file pyret/build/bundled-node-deps.js \
     --compiled-dir " + compiledDir + " \
     --outfile " + outfileJarr + " -no-check-mode\
   ";

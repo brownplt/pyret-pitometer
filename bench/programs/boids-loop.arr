@@ -1,4 +1,4 @@
-sqr = num-expt(_, 2)
+sqr = num-expt(_, ~2)
 
 _dimension = ~500
 _width = _dimension
@@ -14,7 +14,7 @@ _speedspread = ~5
 _maxspeed = ~10.0
 _border = _dimension / 50
 _leaderborder = _border
-_borderspeedchange = 0.2
+_borderspeedchange = ~0.2
 
 _mindist = ~10
 _matchspeedwindow = ~40
@@ -23,7 +23,7 @@ _leaderbirdrandomspeedchange = ~1
 _leadermaxspeed = ~5
 
 _barriers = [list:[list:100,100], [list:200, 200]]
-_barrierradius = 30
+_barrierradius = ~30
 
 fun uniform(start, span):
   random((span * 2) + 1) + (start - span)

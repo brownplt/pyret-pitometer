@@ -4,6 +4,7 @@ define(["child_process", "fs"], function(child_process, fs) {
     var dirName = "build-space/pyret-lang-" + commit
     child_process.execSync("git clone " + base + " " + dirName);
     child_process.execSync("git checkout " + commit, { cwd: dirName });
+    child_process.execSync("npm install", { cwd: dirName });
   }
 
   function cloneIfNeeded(base, dirName) {
