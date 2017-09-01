@@ -153,6 +153,16 @@ require(["./checkout-pyret", "child_process", "fs", "path", "command-line-args",
 
   options.commit = options.commit || 'HEAD';
 
+  if(fs.existsSync(outdir)) {
+    if(fs.readdirSync(outdir).length !== 0) {
+      console.error("Output directory exists and is non-empty, exiting to avoid clobbering data");
+      return;
+    }
+  }
+  else {
+    fs.mkdirSync(outdir);
+  }
+
   function parseBranches(str) {
     /* Example output:
 
