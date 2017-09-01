@@ -189,11 +189,13 @@ $ git branch -r --contains 119a5e636a09dcc7ad228ee2f7cafdad4a804e06
 
     checkoutPyret.cloneIfNeeded(base, workDir);
 
-    const commitBeforeCheckout = String(childProcess.execSync("git rev-parse HEAD"));
+    const runString = (cmd) => String(childProcess.execSync(cmd, { cwd: workDir}));
+
+    const commitBeforeCheckout = runString("git rev-parse HEAD");
 
     checkoutPyret.justCheckout(workDir, commit);
 
-    const commitAfterCheckout = String(childProcess.execSync("git rev-parse HEAD"));
+    const commitAfterCheckout = runString("git rev-parse HEAD");
 
     if(commitBeforeCheckout !== commitAfterCheckout) {
       console.log("Before this script ran, the repo was checked out to ", commitBeforeCheckout, " and is now on ", commitAfterCheckout, " so make clean is being run");
@@ -202,7 +204,6 @@ $ git branch -r --contains 119a5e636a09dcc7ad228ee2f7cafdad4a804e06
 
     console.log("Checked out " + commit + " and made clean");
 
-    const runString = (cmd) => String(childProcess.execSync(cmd, { cwd: workDir}));
 
     const runTime = new Date().toISOString();
     const outFile = path.resolve(".", `${outdir}/${runTime}-${commit}.json`);
