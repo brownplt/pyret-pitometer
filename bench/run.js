@@ -4,6 +4,7 @@ require(["./checkout-pyret", "child_process", "fs", "path", "command-line-args",
   const optionDefinitions = [
     { name: 'commits-file', alias: 'c', type: String },
     { name: 'commit', type: String },
+    { name: 'config', type: String },
     { name: 'repo', alias: 'r', type: String },
     { name: 'outdir', alias: 'o', type: String, defaultValue: "results/" },
     { name: 'aws-dir', type: String, defaultValue: "all-results/" },
@@ -207,9 +208,13 @@ $ git branch -r --contains 119a5e636a09dcc7ad228ee2f7cafdad4a804e06
 
     const runTime = new Date().toISOString();
     const outFile = path.resolve(".", `${outdir}/${runTime}-${commit}.json`);
-    const configFile = path.resolve(".", "for-test.json");
+    let configOption = "";
+    if(options.config) {
+      const configFile = path.resolve(".", options.config);
+      configOption = `--config ${configFile}`;
+    }
 
-    runString(`node pitometer/run-measurements.js --config ${configFile}`);
+    runString(`node pitometer/run-measurements.js ${configOption}`);
     runString(`cp pitometer/results.json ${outFile}`);
   }
 
