@@ -28,7 +28,7 @@
 <script>
 
 let THEGLOBALDATA = undefined;
-let data = fetch("http://mainmast.cs.brown.edu/pitometer/logs/all-jenkins.json");
+let data = fetch("http://pyret-pitometer.s3-website-us-east-1.amazonaws.com/aggregated.json");
 let uri = new URI(window.location.href);
 let labels = uri.search(true).label;
 let skipIds = uri.search(true).skipId;
