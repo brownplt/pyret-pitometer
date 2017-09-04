@@ -134,6 +134,8 @@ function compare(data, commits, filterLabels, skipIds) {
 
   svg.call(tip);
 
+  let showing = false;
+
   svg.selectAll("circle")
     .data(data)
     .enter()
