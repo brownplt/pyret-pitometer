@@ -53,9 +53,14 @@ data.then(function(dr) {
   dr.json().then((d) => {
     THEGLOBALDATA = d;
     let commits = uri.search(true).commit;
+    let branches = uri.search(true).branch;
     if(typeof commits !== "undefined") {
       if(typeof commits === "string") { commits = [commits] }
-      compare(d, commits, labels, skipIds, opts);
+      compareCommits(d, commits, labels, skipIds, opts);
+    }
+    else if(typeof branches !== "undefined") {
+      if(typeof branches === "string") { branches = [branches] }
+      compareBranches(d, branches, labels, skipIds, opts);
     }
     else {
       render(d, labels, skipIds, opts);

@@ -48,6 +48,19 @@ function filterOnCommits(data, commits) {
   });
 }
 
+
+
+function filterOnBranches(data, branches) {
+  return data.filter((d) => {
+    let hasBranch = false;
+    branches.forEach((b) => {
+      hasBranch = hasBranch || (d.branches.indexOf(b) !== -1);
+    });
+    return hasBranch;
+  });
+}
+
+
 let startR = 0;
 let startG = 100;
 let startB = 200;
@@ -59,14 +72,30 @@ function nextColor() {
   return "rgb(" + startR + "," + startG + "," + startB + ")";
 }
 
-function compare(data, commits, filterLabels, skipIds, opts) {
-
+function compareCommits(data, commits, filterLabels, skipIds, opts) {
   const colors = {};
   commits.forEach(function(c) {
     colors[c] = nextColor();
   });
-
   data = filterOnCommits(data, commits);
+  return compare(data, filterLabels, skipIds, opts, m => {
+    return colors[m.commit]
+  });
+}
+
+function compareBranches(data, branches, filterLabels, skipIds, opts) {
+  const colors = {};
+  branches.forEach(function(b) {
+    colors[b] = nextColor();
+  });
+  data = filterOnBranches(data, branches);
+  return compare(data, filterLabels, skipIds, opts, m => {
+    return colors[m.branches[0]]
+  });
+}
+
+function compare(data, filterLabels, skipIds, opts, getColor) {
+
   data = filterOnLabels(data, filterLabels);
   data = filterOnIds(data, skipIds);
 
@@ -152,7 +181,7 @@ function compare(data, commits, filterLabels, skipIds, opts) {
     })
     .attr("cy", (d) => yScale(d.measurement))
     .attr("r", 5)
-    .attr("fill", (d) => colors[d.commit])
+    .attr("fill", (d) => getColor(d))
     .on('click', (d) => {
       showing ? tip.hide(d) : tip.show(d);
       showing = !showing;
