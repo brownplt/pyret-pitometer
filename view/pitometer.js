@@ -10,6 +10,7 @@ const plucker = (s) => (d) => d[s];
 
 function tooltipInfo(d) {
   return "Measurement Id: " + d.uuid + "\n"
+    + "Branch(es):" + d.branches.join(",") + "\n"
     + "Measurement: " + d.measurement + "\n"
     + "Labels: " + d.labels.join(",") + "\n"
     + d.commitInfo;
@@ -58,7 +59,7 @@ function nextColor() {
   return "rgb(" + startR + "," + startG + "," + startB + ")";
 }
 
-function compare(data, commits, filterLabels, skipIds) {
+function compare(data, commits, filterLabels, skipIds, opts) {
 
   const colors = {};
   commits.forEach(function(c) {
@@ -81,10 +82,15 @@ function compare(data, commits, filterLabels, skipIds) {
   });
   const uniqueLabels = [... new Set(labels)];
 
+  const calcDim = (spec, data, field, fun) => {
+    if(spec === "auto") { return fun(data, plucker(field)); }
+    else { return Number(spec); }
+  }
+
   const yScale = d3.scale.linear()
     .domain([
-      d3.max(data, plucker("measurement")),
-      d3.min(data, plucker("measurement"))
+      calcDim(opts.dim.ymax, data, "measurement", d3.max),
+      calcDim(opts.dim.ymin, data, "measurement", d3.min),
     ])
     .range([ 0 + YPADDING, HEIGHT ]);
 
@@ -156,7 +162,7 @@ function compare(data, commits, filterLabels, skipIds) {
 }
 
 
-function render(data, filterLabels, skipIds) {
+function render(data, filterLabels, skipIds, opts) {
 
   data = filterOnLabels(data, filterLabels);
   data = filterOnIds(data, skipIds);
@@ -173,10 +179,15 @@ function render(data, filterLabels, skipIds) {
   });
   const uniqueCodeDates = [... new Set(codeDates)].sort();
 
+  const calcDim = (spec, data, field, fun) => {
+    if(spec === "auto") { return fun(data, plucker(field)); }
+    else { return Number(spec); }
+  }
+
   const yScale = d3.scale.linear()
     .domain([
-      d3.max(data, plucker("measurement")),
-      d3.min(data, plucker("measurement"))
+      calcDim(opts.dim.ymax, data, "measurement", d3.max),
+      calcDim(opts.dim.ymin, data, "measurement", d3.min),
     ])
     .range([ 0 + YPADDING, HEIGHT ]);
   const xScale = d3.scale.linear()

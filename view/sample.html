@@ -32,6 +32,15 @@ let data = fetch("http://pyret-pitometer.s3-website-us-east-1.amazonaws.com/aggr
 let uri = new URI(window.location.href);
 let labels = uri.search(true).label;
 let skipIds = uri.search(true).skipId;
+let ymax = uri.search(true).ymax || "auto";
+let ymin = uri.search(true).ymin || "auto";
+let dim = {
+  ymin: ymin,
+  ymax: ymax
+};
+let opts = {
+  dim: dim
+};
 if(typeof skipIds === "string") { skipIds = [skipIds]; }
 if(typeof skipIds === "undefined") { skipIds = []; }
 if(typeof labels === "string") { labels = [labels]; }
@@ -46,10 +55,10 @@ data.then(function(dr) {
     let commits = uri.search(true).commit;
     if(typeof commits !== "undefined") {
       if(typeof commits === "string") { commits = [commits] }
-      compare(d, commits, labels, skipIds);
+      compare(d, commits, labels, skipIds, opts);
     }
     else {
-      render(d, labels, skipIds);
+      render(d, labels, skipIds, opts);
     }
   });
 });
